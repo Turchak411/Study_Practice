@@ -4,7 +4,7 @@
  */
 return array(
     'host' => 'localhost',
-    'dbname' => 'aircraft',
+    'dbname' => 'airline',
     'user' => 'root',
     'password' => '',
 );
