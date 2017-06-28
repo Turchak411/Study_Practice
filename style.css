@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+
+.auto-style1 {
+    font-size: small;
+}
+
+.img_center {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -100px auto auto -100px;
+}
+
+body {
+    background: #8B8989 url(resources/img_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+}
+
+label {
+    background-color: white;
+    font-size: 25px;
+}
+
+/* Табличные конфиги */
+td {
+    width: 180px;
+}
+
+.table_center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -40px auto auto -70px;
+}
+
+table tr {
+    border-left: 12px solid #E5E5E5;
+    border-top: 1px solid #E5E5E5;
+}
+
+/* Прозрачность ячеек */
+.trans_bc{
+    border-color: transparent
+}
