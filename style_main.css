@@ -1,0 +1,49 @@
+/* Стили для главной страницы */
+
+body {
+    background: #8B8989 url(resources/img_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+}
+
+label {
+    background-color: white;
+    font-size: 30px;
+}
+
+/* Табличные конфиги */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid #E5E5E5;
+    border-top: 1px solid #E5E5E5;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+table tr:hover {
+    background-color: #E6E5FF;
+}
+
+table th {
+    color: #1f1f1f;
+    text-align: center;
+    font-weight: normal;
+    background: white;
+}
+
+td {
+    border: 10px solid lightblue;
+}
+
+/* Прозрачность ячеек */
+.trans_bc{
+    border-color: transparent
+}
+
+.big_butt{ /* (Kappa) */
+    width: 300px;
+    height: 70px;
+    font-size: 24px;
+}
