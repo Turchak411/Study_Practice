@@ -5,6 +5,6 @@
 return array(
     'host' => 'localhost',
     'dbname' => 'airline',
-    'user' => 'root',
+    'user' => 'airline_user',
     'password' => '',
 );
