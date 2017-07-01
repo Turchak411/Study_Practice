@@ -6,4 +6,9 @@ class MainController extends BaseController
     {
         return self::Render("main", "index");
     }
+
+    public function actionMain()
+    {
+        return self::Render("main", "main");
+    }
 }

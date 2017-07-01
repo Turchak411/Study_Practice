@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Airline Terminal - Main Page</title>
-    <link href="template/css/style_main.css" rel="stylesheet" type="text/css">
+    <link href="/template/css/style_main.css" rel="stylesheet" type="text/css">
 
     <div style="text-align:center">
         <label><span class="label">

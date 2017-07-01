@@ -1,6 +1,7 @@
 
 <div class="img_center"><img src="/template/resources/menu.png" width="270" height="283"></div>
 <div class="table_center">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum debitis distinctio dolor eaque enim expedita fuga fugit laudantium, odio quas qui, repudiandae, ullam vel velit veritatis vitae. A, laboriosam.
     <table class="trans_bc" border="1" width="200px">
         <tr class="trans_bc">
             <td align="center">
