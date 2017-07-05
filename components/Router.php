@@ -32,6 +32,9 @@ class Router
 
             if (preg_match("~$uriPattern~", $uri)) {
 
+                // Получаем внутренний путь из внешнего согласно правилу.
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+
                 $segments = explode('/', $path);
 
                 $controllerName = array_shift($segments) . 'Controller';
