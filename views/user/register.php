@@ -22,6 +22,13 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="email" class="col-sm-5 control-label text-center">E-mail</label>
+                <div class="col-sm-3">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="E-mail"
+                           value="<?= $email ?>">
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="password" class="col-sm-5 control-label text-center">Password</label>
                 <div class="col-sm-3">
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password"
@@ -51,7 +58,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" name="log" class="btn btn-success">Зарегистрироваться</button>
+                <button type="submit" name="reg" class="btn btn-success">Зарегистрироваться</button>
             </div>
         </form>
     </div>

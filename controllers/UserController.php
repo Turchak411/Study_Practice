@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 01.07.17
- * Time: 17:53
- */
 class UserController extends BaseController
 {
     public function actionRegistration()
@@ -50,7 +44,7 @@ class UserController extends BaseController
                     if ($result) {
                         $userId = User::checkUserData($login, $password);
                         if ($userId) {
-                            User::auth($userId);
+                            Auth::authorize($userId);
                             echo "Привет, " . $userId;
                         }
                     } else {
@@ -72,7 +66,7 @@ class UserController extends BaseController
 
     public function actionLogin()
     {
-        if (User::checkLogged()) {
+        if (Auth::checkLogged()) {
             header("Location: /");
         }
         $login = '';
@@ -90,7 +84,7 @@ class UserController extends BaseController
             if (!$errors) {
                 $userId = User::checkUserData($login, $password);
                 if ($userId) {
-                    User::auth($userId);
+                    Auth::authorize($userId);
                     echo "Привет, " . $userId;
                 } else {
                     $errors[] = "Неверный пароль";
@@ -110,8 +104,8 @@ class UserController extends BaseController
 
     public function actionLogout()
     {
-        if (User::checkLogged()) {
-            User::logout();
+        if (Auth::checkLogged()) {
+            Auth::logout();
         }
         header("Location: /");
         return true;
