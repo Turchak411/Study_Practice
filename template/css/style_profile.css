@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    background: #8B8989 url(../resources/img_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+}
