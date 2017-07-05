@@ -34,8 +34,8 @@ class Router
 
                 // Получаем внутренний путь из внешнего согласно правилу.
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-
-                $segments = explode('/', $path);
+                // Определить контроллер, action, параметры
+                $segments = explode('/', $internalRoute);
 
                 $controllerName = array_shift($segments) . 'Controller';
                 $controllerName = ucfirst($controllerName);
@@ -52,17 +52,17 @@ class Router
                 }
 
                 $controllerObject = new $controllerName;
-                /*
-                 * Вызываем необходимый метод ($actionName) у определенного
+
+                /* Вызываем необходимый метод ($actionName) у определенного
                  * класса ($controllerObject) с заданными ($parameters) параметрами
                  */
+
                 $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 
                 if ($result != null) {
                     break;
                 }
             }
-
         }
     }
 }
