@@ -51,7 +51,7 @@ class User
         $user = $result->fetch();
         if ($user) {
             // Если запись существует, возвращаем id пользователя
-            return $user['ID'];
+            return $user['UserID'];
         }
         return false;
     }
@@ -192,7 +192,7 @@ class User
         // Соединение с БД
         $db = DB::getConnection();
         // Текст запроса к БД
-        $sql = 'SELECT * FROM Users WHERE ID = :id';
+        $sql = 'SELECT * FROM Users WHERE UserID = :id';
         // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
