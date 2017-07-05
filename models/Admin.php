@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 05.07.2017
- * Time: 18:10
- */
 class Admin
 {
     public static function getRegistrationRequestList()
@@ -51,5 +45,19 @@ class Admin
         $result->execute();
         // Получение и возврат результатов
         return $result->fetch();
+    }
+
+    public static function acceptUser($id)
+    {
+
+    }
+
+    public static function checkPrivateAccess()
+    {
+        $role = Auth::getRole();
+        if ($role != Auth::ROLE_ADMIN && $role != Auth::ROLE_MODERATOR)
+        {
+            header("Location: /");
+        }
     }
 }
