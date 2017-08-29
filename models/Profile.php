@@ -2,7 +2,7 @@
 
 class Profile
 {
-    public static function isNeedEditAirlineFrofile($id)
+    public static function isNeedEditAirlineProfile($id)
     {
         $db = DB::getConnection();
 

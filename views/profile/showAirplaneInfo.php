@@ -13,12 +13,11 @@
     </head>
     <body>
     <div class="container">
-        <form method="post" class="form-horizontal">
-            <h1><? $login ?> > <small>Airplanes list</small></h1>
-            <div class="form-group">
-                <button type="submit" name="log" class="btn btn-success">Назад</button>
-            </div>
-        </form>
+        <code>
+            <?
+            print_r($airplaneInfo);
+            ?>
+        </code>
     </div>
     </body>
 </html>

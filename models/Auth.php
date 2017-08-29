@@ -17,6 +17,7 @@ class Auth
         // Записываем идентификатор пользователя в сессию
         $_SESSION['user'] = $userId;
     }
+
     /**
      * Возвращает идентификатор пользователя, если он авторизирован.<br/>
      * Иначе перенаправляет на страницу входа
@@ -30,6 +31,7 @@ class Auth
         }
         return false;
     }
+
     /**
      *  Выход пользователя из системы
      */
@@ -37,6 +39,7 @@ class Auth
     {
         unset($_SESSION['user']);
     }
+
     /**
      * Проверяет является ли пользователь гостем
      * @return boolean <p>Результат выполнения метода</p>
@@ -55,9 +58,8 @@ class Auth
      */
     public static function getRole()
     {
-        $id = self::checkLogged();
-        if ($id)
-        {
+        if (!self::isGuest()) {
+            $id = self::checkLogged();
             $db = DB::getConnection();
 
             $sql = "SELECT UserType FROM Users WHERE UserID = :id";
@@ -69,18 +71,28 @@ class Auth
             // Указываем, что хотим получить данные в виде массива
             $result->setFetchMode(PDO::FETCH_ASSOC);
             // Выполнение запроса
-            if ($result->execute())
-            {
+            if ($result->execute()) {
                 $userData = $result->fetch();
-                switch ($userData["UserType"])
-                {
-                    case "admin": return self::ROLE_ADMIN;
-                    case "moderator": return self::ROLE_MODERATOR;
-                    case "airline": return self::ROLE_AIRLINE;
-                    case "service": return self::ROLE_SERVICE;
+                switch ($userData["UserType"]) {
+                    case "admin":
+                        return self::ROLE_ADMIN;
+                    case "moderator":
+                        return self::ROLE_MODERATOR;
+                    case "airline":
+                        return self::ROLE_AIRLINE;
+                    case "service":
+                        return self::ROLE_SERVICE;
                 }
             }
         }
         return self::ROLE_GUEST;
+    }
+
+    public static function getId()
+    {
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+        return -1;
     }
 }

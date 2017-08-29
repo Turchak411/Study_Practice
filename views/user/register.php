@@ -46,7 +46,7 @@
             <div class="form-group">
                 <div class="radio">
                     <label>
-                        <input type="radio" name="type" value="owner" id="type" checked>
+                        <input type="radio" name="type" value="airline" id="type" checked>
                         Компания
                     </label>
                 </div>

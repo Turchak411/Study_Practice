@@ -5,9 +5,9 @@ class BaseController
 
     /**
      * Метод отображения страницы
-     * @param $controller Имя контроллера для отображения представления
-     * @param $view Имя Представления
-     * @param $viewBag Массив переменных в представлении
+     * @param $controller string Имя контроллера для отображения представления
+     * @param $view string Имя Представления
+     * @param $viewBag array Массив переменных в представлении
      * @return bool Возвращает True, если представление было подключени, false, если произошла ошибка
      */
     public static function Render($controller, $view, $viewBag = [])

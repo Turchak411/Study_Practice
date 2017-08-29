@@ -11,3 +11,8 @@
     </div>
 </head>
 <body>
+<header>
+    <a href="/user/login">Войти</a>
+    <a href="/user/logout">Выйти</a>
+    <a href="/user/registration">Зарегистрироваться</a>
+</header>

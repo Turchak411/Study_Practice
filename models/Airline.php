@@ -9,7 +9,7 @@
 class Airline
 {
     /**
-     * @return array
+     * @return array Возвращает  список Авиалиний
      */
     public static function getAirlineList()
     {
@@ -36,5 +36,34 @@ class Airline
             $i++;
         }
         return $productsList;
+    }
+
+    public static function getAirlineInfo($id)
+    {
+        $db = DB::getConnection();
+        $sql = 'SELECT * FROM Airlines WHERE AirlineID = :id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        if ($result->execute()) {
+            return $result->fetch();
+        }
+        return false;
+    }
+
+    public static function editInfo($id, $name, $country, $sity)
+    {
+        $db = DB::getConnection();
+        if (!self::getAirlineInfo($id)) {
+            $sql = 'INSERT INTO Airlines(AirlineID, Name, Country, City) VALUES (:id, :name, :country, :city)';
+        } else {
+            $sql = 'UPDATE Airlines SET Name = :name, Country = :country, City = :city WHERE AirlineID = :id';
+        }
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':country', $country, PDO::PARAM_STR);
+        $result->bindParam(':city', $sity, PDO::PARAM_STR);
+        return $result->execute();
     }
 }
