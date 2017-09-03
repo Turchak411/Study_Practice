@@ -1,20 +1,12 @@
-<?php
+<?
+View::startBody("Список пользователей, для авторизации")
 ?>
-
-<html>
-<head>
-    <title>Airline Terminal - Main Page</title>
-    <link href="/template/css/style_main.css" rel="stylesheet" type="text/css">
-
+<div style="text-align:center">
     <div style="text-align:center">
         <label><span class="label">
         Welcome to the Main Terminal page!
                 </span></label>
     </div>
-</head>
-
-<body>
-<div style="text-align:center">
     <br><br><br><br>
     <table class="trans_bc" border="0" width="200px">
         <tr>
@@ -97,5 +89,6 @@
         </tr>
     </table>
 </div>
-</body>
-</html>
+<?php
+View::endBody()
+?>
