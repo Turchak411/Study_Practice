@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/template/css/style.css">
 </head>
 <body>
+<div>
+    <code><? print_r($_SESSION) ?><br><? print_r($_SESSION) ?></code>
+</div>
 <nav class="navbar navbar-default navbar-static-top header">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -57,29 +60,27 @@
                     <?
                 } else {
                     ?>
-                    <li><a href="/profile">Профиль</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">ID User <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile">Профиль</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/user/logout">Выйти</a></li>
+                        </ul>
+                    </li>
                     <?
                 }
                 ?>
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-lg-3 col-md-2">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header">Sidebar</li>
@@ -89,4 +90,4 @@
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->
-        <div class="col-md-9">
+        <div class="col-lg-9 col-md-10">
