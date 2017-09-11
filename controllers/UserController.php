@@ -85,20 +85,18 @@ class UserController extends BaseController
                 $userId = User::checkUserData($login, $password);
                 if ($userId) {
                     Auth::authorize($userId);
-                    echo "Привет, " . $userId;
+                    header("Location: /");
                 } else {
                     $errors[] = "Неверный пароль";
                 }
             }
             if ($errors) {
+                //TODO: Вывод ошибок
                 echo "<code>";
                 print_r($errors);
                 echo "</code>";
             }
         }
-        echo "<code>";
-        print_r($_SESSION);
-        echo "</code>";
         return self::Render('user', 'login', compact('login', 'password'));
     }
 
