@@ -10,15 +10,25 @@ class ProfileController extends BaseController
     public function actionIndex()
     {
         $id = Auth::getId();
-        if (Profile::isNeedEditAirlineProfile($id)) {
-            header("Location: /profile/edit");
-            return true;
-        }
+        $role = Auth::getRole();
+
         if (!Profile::isUserValidated($id)) {
             return self::Render('profile', 'waitingForConfirmation');
         }
-        return self::Render('profile', 'index');
 
+        if ($role == Auth::ROLE_AIRLINE) {
+            if (Profile::isNeedEditAirlineProfile($id)) {
+                header("Location: /profile/edit");
+                return true;
+            }
+            return self::Render('profile', 'index');
+        } elseif ($role == Auth::ROLE_SERVICE) {
+            if (Profile::isNeedEditServiceProfile($id)) {
+                header("Location: /profile/edit");
+                return true;
+            }
+        }
+        return self::Render('profile', 'index');
     }
 
     public function actionEdit()
@@ -50,7 +60,29 @@ class ProfileController extends BaseController
             }
             return self::Render('profile', 'editAirlineInfo', compact('name', 'country', 'city'));
         } elseif ($role == Auth::ROLE_SERVICE) {
-            return self::Render('profile', 'edit', compact('name', 'country', 'city'));
+            $name = '';
+            $country = '';
+            $city = '';
+            $serviceInfo = Service::getServiceInfo(Auth::getId());
+            print_r($serviceInfo);
+            if ($serviceInfo) {
+                $name = $serviceInfo['Name'];
+                $country = $serviceInfo['Country'];
+                $city = $serviceInfo['City'];
+            }
+            if (isset($_POST['editInfo'])) {
+                $id = Auth::getId();
+                $name = $_POST['name'];
+                $country = $_POST['country'];
+                $city = $_POST['city'];
+                if (Service::editInfo($id, $name, $country, $city)) {
+                    //TODO: Убрать вывод
+                    echo "da";
+                } else {
+                    echo "net";
+                }
+            }
+            return self::Render('profile', 'editServiceInfo', compact('name', 'country', 'city'));
         } elseif ($role == Auth::ROLE_ADMIN) {
             return self::Render('profile', 'edit', compact('name', 'country', 'city'));
         } elseif ($role == Auth::ROLE_MODERATOR) {
@@ -68,19 +100,17 @@ class ProfileController extends BaseController
                 echo "<code>";
                 print_r($airplaneInfo);
                 echo "</code>";
-                if ($id != $airplaneInfo['Owner'])
-                {
+                if ($id != $airplaneInfo['Owner']) {
                     //TODO: Добавить Error по доступу
                     echo "Вы не можете редактировать информацию об этом самолете";
                 }
-            }else
+            } else
                 echo "Такого самолета нет";
             return self::Render('profile', 'showAirplaneInfo', compact('airplaneInfo'));
         } else {
             $airplanes = Airplane::getAirplaneListForAirline($id);
             return self::Render('profile', 'showAirplanesList', compact('airplanes'));
         }
-
     }
 
     public function actionAddAirplane()
@@ -91,8 +121,7 @@ class ProfileController extends BaseController
         echo "<code>";
         print_r($_POST);
         echo "</code>";
-        if (isset($_POST['add']))
-        {
+        if (isset($_POST['add'])) {
             $date = $_POST['date'];
             $limit = $_POST['limit'];
             $sd = Airplane::addAirplane($id, $date, $limit);
@@ -105,14 +134,14 @@ class ProfileController extends BaseController
 
     public function actionContractsInfo($contractID = -1)
     {
+        //Profile::checkValidation();
         $id = Auth::getId();
         $date = '';
         $limit = '';
         echo "<code>";
         print_r($_POST);
         echo "</code>";
-        if (isset($_POST['add']))
-        {
+        if (isset($_POST['add'])) {
             $date = $_POST['date'];
             $limit = $_POST['limit'];
             $sd = Airplane::addAirplane($id, $date, $limit);
@@ -125,6 +154,7 @@ class ProfileController extends BaseController
 
     public function actionAddContract()
     {
-        return self::Render('profile', 'addContract');
+        $services = Service::getServicesList();
+        return self::Render('profile', 'addContract', compact('services'));
     }
 }

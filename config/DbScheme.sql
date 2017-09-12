@@ -48,6 +48,7 @@ CREATE TABLE AirlineServiceContract (
   FOREIGN KEY (AirlineID) REFERENCES Airlines(AirlineID)
 ) DEFAULT CHARSET=utf8;
 CREATE TABLE AirplaneServiceContract (
+  ID INT NOT NULL UNIQUE AUTO_INCREMENT,
   ContractID INT NOT NULL,
   AirplaneID INT NOT NULL,
   Cost INT NOT NULL,

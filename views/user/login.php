@@ -17,6 +17,9 @@ View::startBody("Авторизация")
                 <div class="form-group">
                     <button type="submit" name="log" class="btn btn-success">Войти</button>
                 </div>
+                <div class="form-group">
+                    <p>Не зарегистрированы? <a href="/user/registration">Создайте аккаунт</a></p>
+                </div>
             </form>
         </div>
     </div>

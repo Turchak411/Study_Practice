@@ -3,7 +3,7 @@ View::startBody("Авторизация");
 ?>
     <form method="post">
         <div class="form-group">
-            <label for="name">Название компании</label>
+            <label for="name">Название сервиса</label>
             <input type="text" id="name" name="name" class="form-control" value="<?= $name ?>">
         </div>
         <div class="form-group">
