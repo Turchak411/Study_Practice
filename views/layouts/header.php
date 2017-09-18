@@ -12,7 +12,7 @@
 </head>
 <body>
 <div>
-    <code><? print_r($_SESSION) ?><br><? print_r($_SESSION) ?></code>
+    <code><? print_r($_SESSION) ?><br><? if (isset($_POST)) print_r($_POST) ?></code>
 </div>
 <nav class="navbar navbar-default navbar-static-top header">
     <div class="container">
@@ -24,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Airlines</a>
+            <a class="navbar-brand" href="/">Airlines</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

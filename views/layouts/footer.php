@@ -4,7 +4,7 @@
 <hr>
 
 <footer>
-    <p>&copy; Company 2013</p>
+    <p>&copy; <a href="">Турчак Александр</a> <?=date("Y")?></p>
 </footer>
 
 </div><!--/.fluid-container-->

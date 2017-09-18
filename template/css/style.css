@@ -34,3 +34,11 @@ table tr {
     background-image: url(../resources/header_template.png);
     background-size: 100%;
 }
+
+.text-accent {
+    color: #50C0FB;
+}
+
+.profile-navigate {
+    text-transform: uppercase;
+}

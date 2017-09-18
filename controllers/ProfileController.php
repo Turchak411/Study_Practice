@@ -132,8 +132,24 @@ class ProfileController extends BaseController
         return self::Render('profile', 'addAirplane', compact('date', 'limit'));
     }
 
-    public function actionContractsInfo($contractID = -1)
+    public function actionContract($contractID = -1)
     {
+        if ($contractID > 0) {
+            $contractInfo = ServiceContract::getContractsById($contractID);
+            $airplanes = AirplaneContract::getAirplanesForContract($contractID);
+            return self::Render('profile/contracts', 'showContractInfo', compact('contractInfo', 'airplanes'));
+        } else {
+            if (isset($_POST['accept'])) {
+
+            }
+            if (isset($_POST['reject'])) {
+
+            }
+            $id = Auth::getId();
+            $contracts = ServiceContract::getConfirmedContracts($id);
+            $unconfirmedContracts = ServiceContract::getUnconfirmedContractsForAirline($id);
+            return self::Render('profile/contracts', 'showContractsForAvialine', compact('contracts', 'unconfirmedContracts'));
+        }
         //Profile::checkValidation();
         $id = Auth::getId();
         $date = '';
@@ -152,9 +168,105 @@ class ProfileController extends BaseController
         return self::Render('profile', 'addAirplane', compact('date', 'limit'));
     }
 
+    public function actionAddServiceConcract()
+    {
+        $id = Auth::getId();
+        $date = '';
+        $limit = '';
+        echo "<code>";
+        print_r($_POST);
+        echo "</code>";
+        if (isset($_POST['add'])) {
+            $date = $_POST['date'];
+            $limit = $_POST['limit'];
+            $sd = Airplane::addAirplane($id, $date, $limit);
+            print_r($sd);
+            echo $sd ? "DA" : "NET";
+        }
+
+        return self::Render('profile', 'addServiceContract', compact('date', 'limit'));
+    }
+
+    /*
+    public function actionServicesInfo()
+    {
+        $id = Auth::getId();
+        $contracts = ServiceContract::getContractsForAirline($id);
+
+        $date = '';
+        $limit = '';
+        //TODO: убрать
+        echo "<code>";
+        print_r($_POST);
+        echo "</code>";
+        if (isset($_POST['add'])) {
+            $date = $_POST['date'];
+            $limit = $_POST['limit'];
+            $sd = Airplane::addAirplane($id, $date, $limit);
+            print_r($sd);
+            echo $sd ? "DA" : "NET";
+        }
+
+        return self::Render('profile', 'showServicesContractList', compact('date', 'limit', 'contracts'));
+    }
+    */
+
     public function actionAddContract()
     {
+        $currentData = date("Y-m-d");
+        $endDate = date("Y-m-d", strtotime("+1 year"));
         $services = Service::getServicesList();
-        return self::Render('profile', 'addContract', compact('services'));
+        if (isset($_POST['confirm'])) {
+            $serviceId = $_POST['service'];
+            $currentData = $_POST['dateStart'];
+            $endDate = $_POST['dateEnd'];
+            //TODO: Добавить проверку на валидность даты
+            $id = Auth::getId();
+            $result = ServiceContract::create($id, $serviceId, $currentData, $endDate, ServiceContract::AIRLINE);
+            if ($result)
+                echo "DA";
+            else
+                echo "NET NET";
+
+        }
+        return self::Render('profile/contracts', 'addContract', compact('services', 'currentData', 'endDate'));
+    }
+
+    public function actionAddContractAirplane($contractId = 0)
+    {
+        if ($contractId > 0) {
+            $cost = 0;
+            if (isset($_POST['addAirplane'])) {
+                $airplaneId = $_POST['airplane'];
+                $cost = $_POST['cost'];
+                $result = AirplaneContract::create($contractId, $airplaneId, $cost);
+                if ($result) {
+                    echo "DADA";
+                } else {
+                    echo "NETNET";
+                }
+            }
+            $airplanes = AirplaneContract::getNotServedAirplanesForContract($contractId);
+            return self::Render('profile/contracts', 'addAirplaneToContract', compact('airplanes', 'cost'));
+        } else {
+            throw new Exception("Контракт не найден", 404);
+        }
+        $currentData = date("Y-m-d");
+        $endDate = date("Y-m-d", strtotime("+1 year"));
+        $services = Service::getServicesList();
+        if (isset($_POST['confirm'])) {
+            $serviceId = $_POST['service'];
+            $currentData = $_POST['dateStart'];
+            $endDate = $_POST['dateEnd'];
+            //TODO: Добавить проверку на валидность датыzz
+            $id = Auth::getId();
+            $result = ServiceContract::create($id, $serviceId, $currentData, $endDate, ServiceContract::AIRLINE);
+            if ($result)
+                echo "DA";
+            else
+                echo "NET NET";
+
+        }
+        return self::Render('profile/contracts', 'addContract', compact('services', 'currentData', 'endDate'));
     }
 }

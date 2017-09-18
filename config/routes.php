@@ -7,14 +7,17 @@
 return array(
     'profile/edit' => 'profile/edit',
     'profile/airplanes/([0-9]+)' => 'profile/airplanesInfo/$1',
-    'profile/contracts/([0-9]+)' => 'profile/contractsInfo/$1',
     'profile/airplanes/add' => 'profile/addAirplane',
+    'profile/services/add' => 'profile/addServiceConcract',//TODO: надо бы удалить и перенести в сервисы
+    'profile/contracts/([0-9]+)/add' => 'profile/addContractAirplane/$1',
+    'profile/contracts/([0-9]+)' => 'profile/contract/$1',
     'profile/contracts/add' => 'profile/addContract',
+    'profile/contracts' => 'profile/contract',
     'profile/airplanes' => 'profile/airplanesInfo',
-    'profile/contracts' => 'profile/contractsInfo',
+    'profile/services' => 'profile/servicesInfo',//TODO: надо бы удалить и перенести в сервисы
     'profile' => 'profile/index',
-    'admin/request/([0-9]+)' => 'admin/request/$1',
-    'admin/requests' => 'admin/requestList',
+    'admin/requests/([0-9]+)' => 'admin/request/$1',
+    'admin/requests' => 'admin/request',
     'admin' => 'admin/index',
     'user/registration' => 'user/registration',
     'user/logout' => 'user/logout',

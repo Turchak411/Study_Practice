@@ -11,17 +11,22 @@ class AdminController extends BaseController
     {
         return true;
     }
-    public function actionRequestList()
+
+    public function actionRequest($id = -1)
     {
-        $userList = Admin::getRegistrationRequestList();
-        return self::Render('admin', 'requestList', compact('userList'));
-    }
-    public function actionRequest($id)
-    {
-        var_dump($id);
-        $userList = Admin::getRequestByID($id);
-        var_dump($userList);
-        print_r($userList);
+        if ($id >= 0)
+        {
+            var_dump($id);
+            $userList = Admin::getRequestByID($id);
+            var_dump($userList);
+            print_r($userList);
+
+        }
+        else
+        {
+            $userList = Admin::getRegistrationRequestList();
+            return self::Render('admin', 'requestList', compact('userList'));
+        }
         return true;
     }
 }
