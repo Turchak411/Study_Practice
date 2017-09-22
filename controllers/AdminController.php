@@ -14,16 +14,24 @@ class AdminController extends BaseController
 
     public function actionRequest($id = -1)
     {
-        if ($id >= 0)
-        {
+        if (isset($_POST['accept'])) {
+            $userId = $_POST['accept'];
+            if (Admin::acceptUser($userId))
+            {
+                echo "DADA";
+            }
+            else
+            {
+                echo "NETNET";
+            }
+        }
+        if ($id >= 0) {
             var_dump($id);
             $userList = Admin::getRequestByID($id);
             var_dump($userList);
             print_r($userList);
 
-        }
-        else
-        {
+        } else {
             $userList = Admin::getRegistrationRequestList();
             return self::Render('admin', 'requestList', compact('userList'));
         }

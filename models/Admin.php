@@ -49,7 +49,11 @@ class Admin
 
     public static function acceptUser($id)
     {
-
+        $db = DB::getConnection();
+        $sql = 'UPDATE Users SET IsValidated = 1 WHERE UserID = :id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
     }
 
     public static function checkPrivateAccess()

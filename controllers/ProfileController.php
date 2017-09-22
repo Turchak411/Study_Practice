@@ -167,7 +167,7 @@ class ProfileController extends BaseController
 
         return self::Render('profile', 'addAirplane', compact('date', 'limit'));
     }
-
+/*
     public function actionAddServiceConcract()
     {
         $id = Auth::getId();
@@ -186,7 +186,7 @@ class ProfileController extends BaseController
 
         return self::Render('profile', 'addServiceContract', compact('date', 'limit'));
     }
-
+*/
     /*
     public function actionServicesInfo()
     {

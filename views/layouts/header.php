@@ -83,10 +83,10 @@
         <div class="col-lg-3 col-md-2">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Авиалинии</a></li>
-                    <li><a href="#">Обслуживающие компании</a></li>
+                    <li class="nav-header">Меню</li>
+                    <li><a href="/airlines">Авиалинии</a></li>
+                    <li><a href="/airplanes">Самолеты</a></li>
+                    <li><a href="/services">Обслуживающие компании</a></li>
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->

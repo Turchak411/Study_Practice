@@ -16,6 +16,7 @@ class View
     {
         echo "<div class='profile-navigate''>";
         echo "<p>";
+        echo "<a href='/'>Главная</a> / ";
         if (!empty($pathArrays)) {
             $count = count($pathArrays) - 1;
             $path = "";

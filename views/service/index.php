@@ -1,7 +1,7 @@
 <?
-View::startBody("Список самолетов");
+View::startBody("Список сервисов");
 $path = array(
-    ["name" => "самолеты", "path" => "airplanes"],
+    ["name" => "сервисы", "path" => "services"],
 );
 ?>
     <div class="col-md-12">
@@ -9,19 +9,19 @@ $path = array(
         <section id="info">
             <table class="table">
                 <tr>
-                    <th>Название авиалинии</th>
+                    <th>Название сервиса</th>
                     <th>Страна</th>
                     <th>Город</th>
                     <th>Рейтинг</th>
                 </tr>
                 <?
-                foreach ($airlines as $airline) {
+                foreach ($services as $service) {
                     ?>
                     <tr>
-                        <td><a href="/airlines/<?= $airline["AirlineID"] ?>"><?= $airline["Name"] ?></a></td>
-                        <td><?= $airline["Country"] ?></td>
-                        <td><?= $airline["City"] ?></td>
-                        <td><?= $airline["Rating"] ?></td>
+                        <td><a href="/services/<?= $service["ServiceID"] ?>"><?= $service["Name"] ?></a></td>
+                        <td><?= $service["Country"] ?></td>
+                        <td><?= $service["City"] ?></td>
+                        <td><?= $service["Rating"] ?></td>
                     </tr>
                     <?
                 }
