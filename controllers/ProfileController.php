@@ -47,16 +47,44 @@ class ProfileController extends BaseController
                 $city = $airlineInfo['City'];
             }
             if (isset($_POST['editInfo'])) {
+                // Выполнение проверки правильности заполненных полей:
+                $errors = array();
+
                 $id = Auth::getId();
-                $name = $_POST['name'];
-                $country = $_POST['country'];
-                $city = $_POST['city'];
+
+                if ($_POST['name'] == '') {
+                    $errors[] = 'Пожалуйста, введите корректное имя.';
+                } else {
+                    $name = $_POST['name'];
+                }
+
+                if ($_POST['country'] == '') {
+                    $errors[] = 'Пожалуйста, проверьте корректность ввода названия страны.';
+                } else {
+                    $country = $_POST['country'];
+                }
+
+                if ($_POST['city'] == '') {
+                    $errors[] = 'Пожалуйста, проверьте корректность ввода названия города.';
+                } else {
+                    $city = $_POST['city'];
+                }
+
+                if(empty($errors)) {
+                    Airline::editInfo($id, $name, $country, $city);
+                    echo '<div style="color: green;">Информация успешно обновлена!</div><hr>';
+                } else {
+                    echo '<div style="color: red;">' . array_shift($errors) . '</div><hr>';
+                }
+
+                /*
                 if (Airline::editInfo($id, $name, $country, $city)) {
                     //TODO: Убрать вывод
                     echo "da";
                 } else {
                     echo "net";
                 }
+                */
             }
             return self::Render('profile', 'editAirlineInfo', compact('name', 'country', 'city'));
         } elseif ($role == Auth::ROLE_SERVICE) {
