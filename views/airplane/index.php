@@ -1,25 +1,34 @@
-<head>
-    <link rel="stylesheet" href="/template/css/bootstrap.css">
-    <link rel="stylesheet" href="/template/css/bootstrap-theme.css">
-</head>
-<body>
-<div class="row">
-    <div class="col-md-6">
-        <table class="table table-bordered">
-            <tr>
-                <th>header 1</th>
-                <th>header 2</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-            </tr>
-        </table>
+<?
+View::startBody("Список самолетов");
+$path = array(
+    ["name" => "самолеты", "path" => "airplanes"],
+);
+?>
+    <div class="col-md-12">
+        <? View::getNavigationPath($path) ?>
+        <section id="info">
+            <table class="table">
+                <tr>
+                    <th>Название самолета</th>
+                    <th>Дата производства</th>
+                    <th>Ограничение количества операций</th>
+                    <th>Владелец</th>
+                </tr>
+                <?
+                foreach ($airplanes as $airplane) {
+                    ?>
+                    <tr>
+                        <td><a href="/airplanes/<?= $airplane["AirplaneID"] ?>"><?= $airplane["Name"] ?></a></td>
+                        <td><?= $airplane["ProductionDate"] ?></td>
+                        <td><?= $airplane["MaxOperatingDays"] ?></td>
+                        <td><?= $airplane["Owner"] ?></td>
+                    </tr>
+                    <?
+                }
+                ?>
+            </table>
+        </section>
     </div>
-    <div class="col-md-6">
-        <form action="">
-            <button type="submit" class="btn btn-danger">Отправить</button>
-        </form>
-    </div>
-</div>
-</body>
+<?
+View::endBody();
+?>

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 01.07.17
- * Time: 20:32
- */
 class User
 {
     /**
@@ -51,50 +45,9 @@ class User
         $user = $result->fetch();
         if ($user) {
             // Если запись существует, возвращаем id пользователя
-            return $user['ID'];
+            return $user['UserID'];
         }
         return false;
-    }
-    /**
-     * Запоминаем пользователя
-     * @param integer $userId <p>id пользователя</p>
-     */
-    public static function auth($userId)
-    {
-        // Записываем идентификатор пользователя в сессию
-        $_SESSION['user'] = $userId;
-    }
-    /**
-     * Возвращает идентификатор пользователя, если он авторизирован.<br/>
-     * Иначе перенаправляет на страницу входа
-     * @return string <p>Идентификатор пользователя</p>
-     */
-    public static function checkLogged()
-    {
-        // Если сессия есть, вернем идентификатор пользователя
-        if (isset($_SESSION['user'])) {
-            return $_SESSION['user'];
-        }
-        return false;
-    }
-
-    /**
-     *  Выход пользователя из системы
-     */
-    public static function logout()
-    {
-        unset($_SESSION['user']);
-    }
-    /**
-     * Проверяет является ли пользователь гостем
-     * @return boolean <p>Результат выполнения метода</p>
-     */
-    public static function isGuest()
-    {
-        if (isset($_SESSION['user'])) {
-            return false;
-        }
-        return true;
     }
     /**
      * Проверяет логин: не меньше, чем 6 символов
@@ -192,7 +145,7 @@ class User
         // Соединение с БД
         $db = DB::getConnection();
         // Текст запроса к БД
-        $sql = 'SELECT * FROM Users WHERE ID = :id';
+        $sql = 'SELECT * FROM Users WHERE UserID = :id';
         // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 01.07.17
- * Time: 17:53
- */
 class UserController extends BaseController
 {
     public function actionRegistration()
@@ -25,54 +19,42 @@ class UserController extends BaseController
 
             $errors = false;
             if (User::checkLoginExists($login)) {
-                $errors[] = "Пользователь с таким логином уже зарегистрирован";
+                $errors['loginError'] = "Пользователь с таким логином уже зарегистрирован";
             }
             if (User::checkEmailExists($email)) {
-                $errors[] = "Пользователь с такой почтой уже зарегистрирован";
+                $errors['emailError'] = "Пользователь с такой почтой уже зарегистрирован";
             }
             if (!$errors) {
                 if (!User::checkLogin($login)) {
-                    $errors[] = "Длинна логина должна быть не менее 6 симовлов";
+                    $errors['loginLengthError'] = "Длинна логина должна быть не менее 6 симовлов";
                 }
                 if (!User::checkPassword($password)) {
-                    $errors[] = "Длинна пароля должна быть не менее 6 симовлов";
+                    $errors['passwordLengthError'] = "Длинна пароля должна быть не менее 6 симовлов";
                 }
                 if (!User::checkPasswordConfirm($password, $confirmPassword)) {
-                    $errors[] = "Пароли не совпадают";
+                    $errors['passwordCheckError'] = "Пароли не совпадают";
                 }
                 if (!User::checkEmail($email)) {
-                    $errors[] = "Email введен неправильно";
+                    $errors['emailCheckError'] = "Email введен неправильно";
                 }
-                //TODO: проверка типа
-                print_r($errors);
                 if (!$errors) {
                     $result = User::register($login, $email, $password, $type);
                     if ($result) {
                         $userId = User::checkUserData($login, $password);
                         if ($userId) {
-                            User::auth($userId);
-                            echo "Привет, " . $userId;
+                            Auth::authorize($userId);
+                            header("Location: /profile");
                         }
-                    } else {
-                        echo "we";
                     }
                 }
             }
-            if ($errors) {
-                echo "<code>";
-                print_r($errors);
-                echo "</code>";
-            }
         }
-        echo "<code>";
-        print_r($_SESSION);
-        echo "</code>";
-        return self::Render('user', 'register', compact('login', 'email', 'password', 'confirmPassword', 'type'));
+        return self::Render('user', 'register', compact('login', 'email', 'password', 'confirmPassword', 'type', 'errors'));
     }
 
     public function actionLogin()
     {
-        if (User::checkLogged()) {
+        if (Auth::checkLogged()) {
             header("Location: /");
         }
         $login = '';
@@ -84,34 +66,26 @@ class UserController extends BaseController
 
             $errors = false;
             if (!User::checkLoginExists($login)) {
-                $errors[] = "Пользователя с таким логином не существует";
+                $errors['loginError'] = "Пользователя с таким логином не существует";
             }
 
             if (!$errors) {
                 $userId = User::checkUserData($login, $password);
                 if ($userId) {
-                    User::auth($userId);
-                    echo "Привет, " . $userId;
+                    Auth::authorize($userId);
+                    header("Location: /");
                 } else {
-                    $errors[] = "Неверный пароль";
+                    $errors['passwordError'] = "Неверный пароль";
                 }
             }
-            if ($errors) {
-                echo "<code>";
-                print_r($errors);
-                echo "</code>";
-            }
         }
-        echo "<code>";
-        print_r($_SESSION);
-        echo "</code>";
-        return self::Render('user', 'login', compact('login', 'password'));
+        return self::Render('user', 'login', compact('login', 'password', 'errors'));
     }
 
     public function actionLogout()
     {
-        if (User::checkLogged()) {
-            User::logout();
+        if (Auth::checkLogged()) {
+            Auth::logout();
         }
         header("Location: /");
         return true;
