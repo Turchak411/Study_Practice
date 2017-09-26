@@ -46,12 +46,12 @@ class ServiceContract
         return $result->fetch();
     }
 
-    public static function getConfirmedContracts($id)
+    public static function getContractsForUser($id)
     {
         // Соединение с БД
         $db = DB::getConnection();
         // Текст запроса к БД
-        $sql = 'SELECT * FROM AirlineServiceContract WHERE (AirlineID = :id OR ServiceID = :id) AND AirlineConfirmed = 1 AND ServiceConfirmed = 1';
+        $sql = 'SELECT * FROM AirlineServiceContract WHERE AirlineID = :id OR ServiceID = :id';
         // Получение результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -78,6 +78,60 @@ class ServiceContract
         // Получение и возврат результатов
         return self::getFetch($result);
     }
+
+    public static function getUnconfirmedContractsForService($id)
+    {
+        // Соединение с БД
+        $db = DB::getConnection();
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM AirlineServiceContract WHERE ServiceID = :id AND ServiceConfirmed = 0 AND AirlineConfirmed = 1';
+        // Получение результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        // Выполнение коменды
+        $result->execute();
+        // Получение и возврат результатов
+        return self::getFetch($result);
+    }
+
+
+    const NOT_SET = 0;
+    const ACTIVE = 1;
+    const WAITING_AIRLINE_CONFIRM = 2;
+    const WAITING_SERVICE_CONFIRM = 3;
+
+
+    public static function getContractStatus($contractId)
+    {
+        // Соединение с БД
+        $db = DB::getConnection();
+        // Текст запроса к БД
+        $sql = 'SELECT ServiceConfirmed, AirlineConfirmed FROM AirlineServiceContract WHERE ContractID = :id';
+        // Получение результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $contractId, PDO::PARAM_INT);
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        // Выполнение коменды
+        $result->execute();
+        // Получение и возврат результатов
+        $row = $result->fetch();
+        if ($row) {
+            if ($row['AirlineConfirmed'] == 0 && $row['ServiceConfirmed'] == 1) {
+                return self::WAITING_AIRLINE_CONFIRM;
+            } elseif ($row['AirlineConfirmed'] == 1 && $row['ServiceConfirmed'] == 0) {
+                return self::WAITING_SERVICE_CONFIRM;
+            } elseif ($row['AirlineConfirmed'] == 1 && $row['ServiceConfirmed'] == 1) {
+                return self::ACTIVE;
+            } else {
+                return self::NOT_SET;
+            }
+        }
+        return self::NOT_SET;
+    }
+
 
     const NONE = 0;
     const BOTH = 1;

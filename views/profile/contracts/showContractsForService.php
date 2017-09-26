@@ -16,8 +16,8 @@ $path = array(
                 <h2>Запросы на подтверждение</h2>
                 <table class="table">
                     <tr>
-                        <th>Номер контракта</th>
-                        <th>Сервис</th>
+                        <th>Авиалиния</th>
+                        <th>Статус</th>
                         <th>Действия</th>
                     </tr>
                     <?
@@ -25,7 +25,7 @@ $path = array(
                         ?>
                         <tr>
                             <td><?= $contract['ContractID'] ?></td>
-                            <td><?= $contract['ServiceID'] ?></td>
+                            <td><?= $contract['AirlineID'] ?></td>
                             <td>
                                 <form method="post" class="form-inline">
                                     <div class="form-group">
@@ -47,13 +47,13 @@ $path = array(
         }
         ?>
         <section id="contracts">
-            <h2>Контракты с вашей авиалинией</h2>
+            <h2>Контракты с вашем сервисом</h2>
             <?
             if (!empty($contracts)) {
                 ?>
                 <table class="table">
                     <tr>
-                        <th>Сервис</th>
+                        <th>Авиалиния</th>
                         <th>Действия</th>
                         <th>Статус</th>
                     </tr>
@@ -79,7 +79,7 @@ $path = array(
                         }
                         ?>
                         <tr>
-                            <td><?= $contract['ServiceID'] ?></td>
+                            <td><?= $contract['AirlineID'] ?></td>
                             <td>
                                 <a href="/profile/contracts/<?= $contract['ContractID'] ?>" class="btn btn-info">Подробнее</a>
                             </td>
@@ -92,7 +92,7 @@ $path = array(
                 <?
             } else {
                 ?>
-                <p>Подтвержденных контрактов с вашей авиалинией не найдено!</p>
+                <p>Подтвержденных контрактов с вашем сервисом не найдено!</p>
                 <?
             }
             ?>

@@ -93,6 +93,7 @@ class ProfileController extends BaseController
 
     public function actionAirplanesInfo($airplaneID = -1)
     {
+        //TODO: Рендер изображения и вывод инфо
         $id = Auth::getId();
         if ($airplaneID >= 0) {
             $airplaneInfo = Airplane::getAirPlaneInfo($airplaneID);
@@ -134,59 +135,55 @@ class ProfileController extends BaseController
 
     public function actionContract($contractID = -1)
     {
-        if ($contractID > 0) {
-            $contractInfo = ServiceContract::getContractsById($contractID);
-            $airplanes = AirplaneContract::getAirplanesForContract($contractID);
-            return self::Render('profile/contracts', 'showContractInfo', compact('contractInfo', 'airplanes'));
-        } else {
-            if (isset($_POST['accept'])) {
-
-            }
-            if (isset($_POST['reject'])) {
-
-            }
-            $id = Auth::getId();
-            $contracts = ServiceContract::getConfirmedContracts($id);
-            $unconfirmedContracts = ServiceContract::getUnconfirmedContractsForAirline($id);
-            return self::Render('profile/contracts', 'showContractsForAvialine', compact('contracts', 'unconfirmedContracts'));
-        }
-        //Profile::checkValidation();
-        $id = Auth::getId();
-        $date = '';
-        $limit = '';
-        echo "<code>";
-        print_r($_POST);
-        echo "</code>";
-        if (isset($_POST['add'])) {
-            $date = $_POST['date'];
-            $limit = $_POST['limit'];
-            $sd = Airplane::addAirplane($id, $date, $limit);
-            print_r($sd);
-            echo $sd ? "DA" : "NET";
-        }
-
-        return self::Render('profile', 'addAirplane', compact('date', 'limit'));
+        $contractInfo = ServiceContract::getContractsById($contractID);
+        $airplanes = AirplaneContract::getAirplanesForContract($contractID);
+        return self::Render('profile/contracts', 'showContractInfo', compact('contractInfo', 'airplanes'));
     }
-/*
-    public function actionAddServiceConcract()
+
+    public function actionContractList()
     {
         $id = Auth::getId();
-        $date = '';
-        $limit = '';
-        echo "<code>";
-        print_r($_POST);
-        echo "</code>";
-        if (isset($_POST['add'])) {
-            $date = $_POST['date'];
-            $limit = $_POST['limit'];
-            $sd = Airplane::addAirplane($id, $date, $limit);
-            print_r($sd);
-            echo $sd ? "DA" : "NET";
-        }
+        if (isset($_POST['accept'])) {
 
-        return self::Render('profile', 'addServiceContract', compact('date', 'limit'));
+        }
+        if (isset($_POST['reject'])) {
+
+        }
+        echo Auth::getRole();
+        if (Auth::getRole() == Auth::ROLE_AIRLINE)
+        {
+            $contracts = ServiceContract::getContractsForUser($id);
+            $unconfirmedContracts = ServiceContract::getUnconfirmedContractsForAirline($id);
+            return self::Render('profile/contracts', 'showContractsForAvialine', compact('contracts', 'unconfirmedContracts'));
+        } elseif (Auth::getRole() == Auth::ROLE_SERVICE)
+        {
+            $contracts = ServiceContract::getContractsForUser($id);
+            $unconfirmedContracts = ServiceContract::getUnconfirmedContractsForService($id);
+            return self::Render('profile/contracts', 'showContractsForService', compact('contracts', 'unconfirmedContracts'));
+        }
+        return true;
+
     }
-*/
+    /*
+        public function actionAddServiceConcract()
+        {
+            $id = Auth::getId();
+            $date = '';
+            $limit = '';
+            echo "<code>";
+            print_r($_POST);
+            echo "</code>";
+            if (isset($_POST['add'])) {
+                $date = $_POST['date'];
+                $limit = $_POST['limit'];
+                $sd = Airplane::addAirplane($id, $date, $limit);
+                print_r($sd);
+                echo $sd ? "DA" : "NET";
+            }
+
+            return self::Render('profile', 'addServiceContract', compact('date', 'limit'));
+        }
+    */
     /*
     public function actionServicesInfo()
     {
