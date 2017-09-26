@@ -60,6 +60,4 @@ CREATE TABLE AirplaneServiceContract (
   FOREIGN KEY (ContractID) REFERENCES AirlineServiceContract(ContractID),
   FOREIGN KEY (AirplaneID) REFERENCES Airplanes(AirplaneID)
 ) DEFAULT CHARSET=utf8;
-INSERT INTO `Users` (`UserID`, `Login`, `Email`, `Password`, `UserType`, `IsValidated`) VALUES ('1', 'qwerty', 'qwerty@qwerty.qwerty', 'qwerty', 'airline', b'1'), ('2', 'asdfgh', 'asdfgh@asdfgh.asdfgh', 'asdfgh', 'service', b'1');
-INSERT INTO `Airlines` (`AirlineID`, `Name`, `Country`, `City`, `Rating`) VALUES ('1', 'Airline company name', 'RU', 'SPB', '0');
-INSERT INTO `Services` (`ServiceID`, `Name`, `Country`, `City`, `Rating`) VALUES ('2', 'The best Service', 'US', 'California', '0');
+INSERT INTO `Users` (`UserID`, `Login`, `Email`, `Password`, `UserType`, `IsValidated`) VALUES ('1', 'adminadmin', 'admin@admin.admin', 'admin12345', 'admin', b'1');
