@@ -30,15 +30,15 @@ table tr {
     border-color: transparent
 }*/
 
-.header{
-    background-image: url(../resources/header_template.png);
-    background-size: 100%;
-}
-
 .text-accent {
     color: #50C0FB;
 }
 
 .profile-navigate {
     text-transform: uppercase;
+}
+
+body
+{
+    background-color: rgba(80, 192, 251, 0.8);
 }

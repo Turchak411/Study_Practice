@@ -20,10 +20,6 @@ class ProfileController extends BaseController
             header("Location: /profile/wait");
         }
 
-        /*if (Profile::isNeedEditAirlineProfile($id)) {
-            header("Location: /profile/edit");
-        }*/
-
         return true;
     }
 
