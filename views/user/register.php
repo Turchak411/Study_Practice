@@ -56,7 +56,7 @@ View::startBody("Регистрация");
                         <div class="radio">
                             <label>
                                 <input type="radio" name="type" value="airline" id="type" checked>
-                                Компания
+                                Авиалиния
                             </label>
                         </div>
                         <div class="radio">

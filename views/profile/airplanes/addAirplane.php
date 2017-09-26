@@ -10,7 +10,7 @@ $path = array(
         <? View::getNavigationPath($path) ?>
             <form method="post" class="form-horizontal">
                 <div class="form-group">
-                    <label for="name" class="control-label text-center">Дата производства</label>
+                    <label for="name" class="control-label text-center">Название самолета</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Название"
                            value="<?= $name ?>" required>
                     <?

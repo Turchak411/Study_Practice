@@ -16,14 +16,7 @@ class AdminController extends BaseController
     {
         if (isset($_POST['accept'])) {
             $userId = $_POST['accept'];
-            if (Admin::acceptUser($userId))
-            {
-                echo "DADA";
-            }
-            else
-            {
-                echo "NETNET";
-            }
+            Admin::acceptUser($userId);
         }
         if ($id >= 0) {
             var_dump($id);

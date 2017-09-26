@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="/template/css/style.css">
 </head>
 <body>
-<div>
-    <code><? print_r($_SESSION) ?><br><? if (isset($_POST)) print_r($_POST) ?></code>
-</div>
 <nav class="navbar navbar-default navbar-static-top header">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->

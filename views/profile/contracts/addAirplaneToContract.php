@@ -1,7 +1,14 @@
 <?
 View::startBody("Добавление самолета на обслуживание");
+$path = array(
+    ["name" => "профиль", "path" => "profile"],
+    ["name" => "контракты", "path" => "contracts"],
+    ["name" => "контракт №" . $contractId, "path" => "contracts/" . $contractId],
+    ["name" => "добавление", "path" => "add"],
+);
 ?>
     <div class="col-md-12">
+        <? View::getNavigationPath($path) ?>
         <form method="post" class="form-horizontal">
             <div class="form-group">
                 <label for="airplane" class="control-label text-center">Обслуживаемый самолет</label>

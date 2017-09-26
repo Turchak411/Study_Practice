@@ -16,6 +16,7 @@ return array(
     'profile/contracts/add' => 'profile/addContract',
     'profile/contracts' => 'profile/contractList',
     'profile/airplanes' => 'profile/airplanesList',
+    'profile/wait' => 'profile/wait',
     'profile' => 'profile/index',
     'airlines/([0-9]+)' => 'airline/show/$1',
     'airlines' => 'airline/index',

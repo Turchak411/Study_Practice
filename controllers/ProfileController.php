@@ -7,8 +7,30 @@ class ProfileController extends BaseController
         Profile::checkPrivateAccess();
     }
 
+    public  function  actionWait()
+    {
+        return self::Render('profile', 'waitingForConfirmation');
+    }
+
+    private function checkProfile()
+    {
+        $id = Auth::getId();
+
+        if (!Profile::isUserValidated($id)) {
+            header("Location: /profile/wait");
+        }
+
+        /*if (Profile::isNeedEditAirlineProfile($id)) {
+            header("Location: /profile/edit");
+        }*/
+
+        return true;
+    }
+
     public function actionIndex()
     {
+        self::checkProfile();
+
         $id = Auth::getId();
         $role = Auth::getRole();
 
@@ -109,6 +131,8 @@ class ProfileController extends BaseController
 
     public function actionAirplanesInfo($airplaneID = -1)
     {
+        self::checkProfile();
+
         $id = Auth::getId();
         $airplaneInfo = Airplane::getAirPlaneInfo($airplaneID);
         if (!$airplaneInfo) {
@@ -122,6 +146,8 @@ class ProfileController extends BaseController
 
     public function actionAirplanesList()
     {
+        self::checkProfile();
+
         $role = Auth::getRole();
         if ($role != Auth::ROLE_AIRLINE) {
             //Возвращаем пользователя на страницу профиля
@@ -134,6 +160,8 @@ class ProfileController extends BaseController
 
     public function actionAddAirplane()
     {
+        self::checkProfile();
+
         $role = Auth::getRole();
         if ($role != Auth::ROLE_AIRLINE) {
             //Возвращаем пользователя на страницу профиля
@@ -175,6 +203,8 @@ class ProfileController extends BaseController
 
     public function actionContract($contractID = -1)
     {
+        self::checkProfile();
+
         $contractInfo = ServiceContract::getContractsById($contractID);
         if (!$contractInfo) {
             header("Location: /profile/contracts");
@@ -185,6 +215,8 @@ class ProfileController extends BaseController
 
     public function actionContractList()
     {
+        self::checkProfile();
+
         $id = Auth::getId();
         if (Auth::getRole() == Auth::ROLE_AIRLINE) {
             if (isset($_POST['accept'])) {
@@ -207,40 +239,52 @@ class ProfileController extends BaseController
 
     public function actionAddContract()
     {
+        self::checkProfile();
+
+        $id = Auth::getId();
         $currentData = date("Y-m-d");
         $endDate = date("Y-m-d", strtotime("+1 year"));
-        $services = Service::getServicesList();
-        if (isset($_POST['confirm'])) {
-            $serviceId = $_POST['service'];
-            $currentData = $_POST['dateStart'];
-            $endDate = $_POST['dateEnd'];
-            $id = Auth::getId();
-            $result = ServiceContract::create($id, $serviceId, $currentData, $endDate, ServiceContract::AIRLINE);
-            if ($result)
-                header("Location: /profile/contracts");
-            else
-                //TODO: Вывод ошибки
-                echo "NET NET";
-
+        if (Auth::getRole() == Auth::ROLE_AIRLINE) {
+            if (isset($_POST['confirm'])) {
+                $services = Service::getServicesList();
+                $serviceId = $_POST['service'];
+                $currentData = $_POST['dateStart'];
+                $endDate = $_POST['dateEnd'];
+                $result = ServiceContract::create($id, $serviceId, $currentData, $endDate, ServiceContract::AIRLINE);
+                if ($result)
+                    header("Location: /profile/contracts");
+            }
+            return self::Render('profile/contracts', 'addContractFromAirline', compact('services', 'currentData', 'endDate'));
+        } elseif (Auth::getRole() == Auth::ROLE_SERVICE) {
+            $airlines = Airline::getAirlineList();
+            if (isset($_POST['confirm'])) {
+                $airlineId = $_POST['airline'];
+                $currentData = $_POST['dateStart'];
+                $endDate = $_POST['dateEnd'];
+                $result = ServiceContract::create($airlineId, $id, $currentData, $endDate, ServiceContract::SERVICE);
+                if ($result)
+                    header("Location: /profile/contracts");
+            }
+            return self::Render('profile/contracts', 'addContractFromService', compact('airlines', 'currentData', 'endDate'));
         }
-        return self::Render('profile/contracts', 'addContract', compact('services', 'currentData', 'endDate'));
+
+        return true;
     }
 
     public function actionAddContractAirplane($contractId = 0)
     {
+        self::checkProfile();
+
         $cost = 0;
         if (isset($_POST['addAirplane'])) {
             $airplaneId = $_POST['airplane'];
             $cost = $_POST['cost'];
             $result = AirplaneContract::create($contractId, $airplaneId, $cost);
             if ($result) {
-                //TODO: Вывести ошибку об успешном заключении контракта
-                echo "DADA";
-            } else {
-                echo "NETNET";
+                header("Location: /profile/contracts/".$contractId);
             }
         }
         $airplanes = AirplaneContract::getNotServedAirplanesForContract($contractId);
-        return self::Render('profile/contracts', 'addAirplaneToContract', compact('airplanes', 'cost'));
+        return self::Render('profile/contracts', 'addAirplaneToContract', compact('airplanes', 'cost', 'contractId'));
     }
 }
