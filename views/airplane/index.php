@@ -9,19 +9,19 @@ $path = array(
         <section id="info">
             <table class="table">
                 <tr>
-                    <th>Название авиалинии</th>
-                    <th>Страна</th>
-                    <th>Город</th>
-                    <th>Рейтинг</th>
+                    <th>Название самолета</th>
+                    <th>Дата производства</th>
+                    <th>Ограничение количества операций</th>
+                    <th>Владелец</th>
                 </tr>
                 <?
-                foreach ($airlines as $airline) {
+                foreach ($airplanes as $airplane) {
                     ?>
                     <tr>
-                        <td><a href="/airlines/<?= $airline["AirlineID"] ?>"><?= $airline["Name"] ?></a></td>
-                        <td><?= $airline["Country"] ?></td>
-                        <td><?= $airline["City"] ?></td>
-                        <td><?= $airline["Rating"] ?></td>
+                        <td><a href="/airplanes/<?= $airplane["AirplaneID"] ?>"><?= $airplane["Name"] ?></a></td>
+                        <td><?= $airplane["ProductionDate"] ?></td>
+                        <td><?= $airplane["MaxOperatingDays"] ?></td>
+                        <td><?= $airplane["Owner"] ?></td>
                     </tr>
                     <?
                 }

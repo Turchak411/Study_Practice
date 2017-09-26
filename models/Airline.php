@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 02.07.2017
- * Time: 17:22
- */
 class Airline
 {
     /**

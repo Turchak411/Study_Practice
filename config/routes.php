@@ -15,7 +15,7 @@ return array(
     'profile/contracts/([0-9]+)' => 'profile/contract/$1',
     'profile/contracts/add' => 'profile/addContract',
     'profile/contracts' => 'profile/contractList',
-    'profile/airplanes' => 'profile/airplanesInfo',
+    'profile/airplanes' => 'profile/airplanesList',
     'profile' => 'profile/index',
     'airlines/([0-9]+)' => 'airline/show/$1',
     'airlines' => 'airline/index',

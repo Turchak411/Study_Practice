@@ -1,7 +1,11 @@
 <?
-View::startBody("Список пользователей, для авторизации")
+View::startBody("Список пользователей, для авторизации");
+$path = array(
+    ["name" => "Управление пользователями", "path" => "admin/requests"],
+);
 ?>
-    <div class="container">
+    <div class="col-md-12">
+        <? View::getNavigationPath($path); ?>
         <table class="table">
             <tr>
                 <th>UserID</th>
@@ -36,5 +40,5 @@ View::startBody("Список пользователей, для авториз�
         </table>
     </div>
 <?
-View::endBody()
+View::endBody();
 ?>

@@ -23,6 +23,7 @@ class Airplane
         $productsList = array();
         while ($row = $result->fetch()) {
             $productsList[$i]['AirplaneID'] = $row['AirplaneID'];
+            $productsList[$i]['Name'] = $row['Name'];
             $productsList[$i]['ProductionDate'] = $row['ProductionDate'];
             $productsList[$i]['MaxOperatingDays'] = $row['MaxOperatingDays'];
             $productsList[$i]['Owner'] = $row['Owner'];
@@ -50,6 +51,7 @@ class Airplane
         $productsList = array();
         while ($row = $result->fetch()) {
             $productsList[$i]['AirplaneID'] = $row['AirplaneID'];
+            $productsList[$i]['Name'] = $row['Name'];
             $productsList[$i]['ProductionDate'] = $row['ProductionDate'];
             $productsList[$i]['MaxOperatingDays'] = $row['MaxOperatingDays'];
             $productsList[$i]['Owner'] = $row['Owner'];
@@ -75,11 +77,12 @@ class Airplane
      * @return bool Возвращает True, при успешном добавлении информации о самолете в базу данных.
      * В случае ошибки возвращает False
      */
-    public static function addAirplane($ownerID, $date, $limit)
+    public static function addAirplane($ownerID, $name,  $date, $limit)
     {
         $db = DB::getConnection();
-        $sql = 'INSERT INTO Airplanes(ProductionDate, MaxOperatingDays, Owner) VALUES (:date, :limit, :owner)';
+        $sql = "INSERT INTO Airplanes(Name, ProductionDate, MaxOperatingDays, Owner) VALUES (:name, :date, :limit, :owner)";
         $result = $db->prepare($sql);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
         $result->bindParam(':date', $date, PDO::PARAM_STR);
         $result->bindParam(':limit', $limit, PDO::PARAM_INT);
         $result->bindParam(':owner', $ownerID, PDO::PARAM_INT);

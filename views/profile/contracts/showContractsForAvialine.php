@@ -31,9 +31,6 @@ $path = array(
                                     <div class="form-group">
                                         <button type="submit" name="accept" class="btn btn-success">Принять</button>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" name="reject" class="btn btn-danger">Отклонить</button>
-                                    </div>
                                     <input type="hidden" name="id" value="<?= $contract['ContractID'] ?>">
                                 </form>
                             </td>

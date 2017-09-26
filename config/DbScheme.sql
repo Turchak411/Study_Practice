@@ -46,8 +46,8 @@ CREATE TABLE AirlineServiceContract (
   AirlineID INT NOT NULL,
   StartDate DATE NOT NULL,
   EndDate DATE NOT NULL,
-  AirlineConfirmed INT NOT NULL DEFAULT 0,
-  ServiceConfirmed INT NOT NULL DEFAULT 0,
+  AirlineConfirmed BIT NOT NULL DEFAULT 0,
+  ServiceConfirmed BIT NOT NULL DEFAULT 0,
   PRIMARY KEY (ContractID),
   FOREIGN KEY (ServiceID) REFERENCES Services(ServiceID),
   FOREIGN KEY (AirlineID) REFERENCES Airlines(AirlineID)
