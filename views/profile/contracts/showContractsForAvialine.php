@@ -76,7 +76,9 @@ $path = array(
                         }
                         ?>
                         <tr>
-                            <td><?= $contract['ServiceID'] ?></td>
+                            <td><?
+                                $service = Service::getServiceInfo($contract['ServiceID']);
+                                echo $service['Name']; ?></td>
                             <td>
                                 <a href="/profile/contracts/<?= $contract['ContractID'] ?>" class="btn btn-info">Подробнее</a>
                             </td>
